@@ -1,4 +1,4 @@
-package com.github.gjvnq.BidCraft;
+package com.github.gjvnq.BidCraft.Model;
 
 import org.bukkit.OfflinePlayer;
 import org.bukkit.inventory.ItemStack;
@@ -7,12 +7,15 @@ import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Iterator;
 
-public abstract class Bid {
+/**
+ * Abstract order type. Always execute partially looking for the best  possible profit.
+ */
+public abstract class Order {
     protected OfflinePlayer player;
     protected double unitPrice, revenue;
     protected Instant placedAt;
     protected ItemStack itemStack;
-    protected BidType type;
+    protected OrderType type;
 
     /**
      * @return who placed this order.
@@ -67,7 +70,7 @@ public abstract class Bid {
     /**
      * @return whether this is a buy or sell bid.
      */
-    public BidType getType() {
+    public OrderType getType() {
         return type;
     }
 
@@ -78,22 +81,26 @@ public abstract class Bid {
         return getAmount() <= 0;
     }
 
-    protected boolean matches(Bid other) {
-        // AutoBids MUST be the "self", i.e. the ones in control.
-        if (other.getClass().equals(AutoBid.class)) {
-            return false;
-        }
+	/**
+	 * @return true if the order can be executed now.
+	 */
+	public boolean isExecutable() {
+		return true;
+	}
 
+	protected abstract boolean matches(Order other);
+
+    protected boolean matchesBasics(Order other) {
         if (this.type == other.type) {
             return false;
         }
         if (this.isComplete() || other.isComplete()) {
             return false;
         }
-        if (this.type == BidType.SELL && this.unitPrice > other.unitPrice) {
+        if (this.type == OrderType.SELL && this.unitPrice > other.unitPrice) {
             return false;
         }
-        if (this.type == BidType.BUY && this.unitPrice < other.unitPrice) {
+        if (this.type == OrderType.BUY && this.unitPrice < other.unitPrice) {
             return false;
         }
         return this.itemStack.isSimilar(other.itemStack);
@@ -111,31 +118,31 @@ public abstract class Bid {
                 this.getTotalPrice());
     }
 
-	protected abstract void computePriceAndAmount(Bid bestOther);
+	protected abstract void computePriceAndAmount(Order bestOther);
 
-	public void executeFromList(ArrayList<Bid> bids) {
-		Bid bestOther = getBestBid(bids);
+	public void executeFromList(ArrayList<Order> orders) {
+		Order bestOther = getBestBid(orders);
 		while (!this.isComplete() && bestOther != null) {
 			computePriceAndAmount(bestOther);
-			bestOther = getBestBid(bids);
+			bestOther = getBestBid(orders);
 		}
 	}
 
-	protected Bid getBestBid(ArrayList<Bid> bids) {
-		Iterator<Bid> it = bids.iterator();
-		Bid bestOther = null;
+	protected Order getBestBid(ArrayList<Order> orders) {
+		Iterator<Order> it = orders.iterator();
+		Order bestOther = null;
 		while (it.hasNext()) {
-			Bid other = it.next();
+			Order other = it.next();
 			if (this.matches(other)) {
 				continue;
 			}
 			if (bestOther == null) {
 				bestOther = other;
 			}
-			if (this.type == BidType.SELL && other.unitPrice > bestOther.unitPrice) {
+			if (this.type == OrderType.SELL && other.unitPrice > bestOther.unitPrice) {
 				bestOther = other;
 			}
-			if (this.type == BidType.BUY && other.unitPrice < bestOther.unitPrice) {
+			if (this.type == OrderType.BUY && other.unitPrice < bestOther.unitPrice) {
 				bestOther = other;
 			}
 		}
@@ -144,10 +151,10 @@ public abstract class Bid {
 
 	protected void executeMe(int finalAmount, double finalPrice) {
 		itemStack.setAmount(itemStack.getAmount()-finalAmount);
-		if (type == BidType.SELL) {
+		if (type == OrderType.SELL) {
 			revenue += finalPrice;
 		}
-		if (type == BidType.BUY) {
+		if (type == OrderType.BUY) {
 			revenue -= finalPrice;
 		}
 	}

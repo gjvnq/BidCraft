@@ -1,8 +1,32 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="d02125a0-a833-4048-a186-80b997814ef9" name="Default Changelist" comment="" />
-    <ignored path="$PROJECT_DIR$/target/" />
+    <list default="true" id="d02125a0-a833-4048-a186-80b997814ef9" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/src/com/github/gjvnq/BidCraft/Model/AuctionBid.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/com/github/gjvnq/BidCraft/Model/AuctionOrder.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/com/github/gjvnq/BidCraft/Model/Config.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/com/github/gjvnq/BidCraft/Model/DepositException.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/com/github/gjvnq/BidCraft/Model/InsufficientFundsException.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/com/github/gjvnq/BidCraft/Model/MoneyException.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/com/github/gjvnq/BidCraft/Model/OrderType.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/com/github/gjvnq/BidCraft/Model/Ref.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/com/github/gjvnq/BidCraft/Model/StandOrder.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/com/github/gjvnq/BidCraft/Model/Utils.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/test/com/github/gjvnq/BidCraft/Model/AuctionBidTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_bukkit_bukkit_1_14_4_R0_1_SNAPSHOT.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_bukkit_bukkit_1_14_4_R0_1_SNAPSHOT.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/github/gjvnq/BidCraft/AutoBid.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/github/gjvnq/BidCraft/Model/InstantOrder.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/github/gjvnq/BidCraft/Bid.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/github/gjvnq/BidCraft/Model/Order.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/github/gjvnq/BidCraft/BidType.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/github/gjvnq/BidCraft/InsufficientFundsException.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/github/gjvnq/BidCraft/Market.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/github/gjvnq/BidCraft/Model/Market.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/github/gjvnq/BidCraft/PriceType.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/github/gjvnq/BidCraft/Model/PriceType.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/github/gjvnq/BidCraft/SimpleBid.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/com/github/gjvnq/BidCraft/AutoBidTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/test/com/github/gjvnq/BidCraft/Model/InstantStandOrderTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/com/github/gjvnq/BidCraft/SimpleBidTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/test/com/github/gjvnq/BidCraft/Model/StandOrderTest.java" afterDir="false" />
+    </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -13,150 +37,17 @@
     <option name="testRunner" value="GRADLE" />
     <option name="delegatedBuild" value="true" />
   </component>
-  <component name="FileEditorManager">
-    <leaf>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/pom.xml">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="273">
-              <caret line="79" column="22" selection-start-line="79" selection-start-column="22" selection-end-line="79" selection-end-column="22" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/com/github/gjvnq/BidCraft/Market.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="21">
-              <caret line="1" selection-start-line="1" selection-end-line="7" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/com/github/gjvnq/BidCraft/Bid.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="21">
-              <caret line="1" selection-start-line="1" selection-end-line="1" />
-              <folding>
-                <element signature="imports" expanded="true" />
-                <element signature="e#278#279#0" expanded="true" />
-                <element signature="e#307#308#0" expanded="true" />
-                <element signature="e#347#348#0" expanded="true" />
-                <element signature="e#378#379#0" expanded="true" />
-                <element signature="e#415#416#0" expanded="true" />
-                <element signature="e#442#443#0" expanded="true" />
-                <element signature="e#476#477#0" expanded="true" />
-                <element signature="e#505#506#0" expanded="true" />
-                <element signature="e#1072#1073#0" expanded="true" />
-                <element signature="e#1107#1108#0" expanded="true" />
-                <element signature="e#483#484#0" expanded="true" />
-                <element signature="e#503#504#0" expanded="true" />
-                <element signature="e#564#565#0" expanded="true" />
-                <element signature="e#603#604#0" expanded="true" />
-                <element signature="e#1212#1213#0" expanded="true" />
-                <element signature="e#1239#1240#0" expanded="true" />
-                <element signature="e#1091#1092#0" expanded="true" />
-                <element signature="e#1123#1124#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/test/com/github/gjvnq/BidCraft/SimpleBidTest.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="189">
-              <caret line="11" column="1" selection-start-line="11" selection-start-column="1" selection-end-line="11" selection-end-column="1" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/com/github/gjvnq/BidCraft/SimpleBid.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-271">
-              <caret line="10" column="20" selection-start-line="10" selection-start-column="20" selection-end-line="10" selection-end-column="20" />
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/com/github/gjvnq/BidCraft/InsufficientFundsException.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="84">
-              <caret line="4" column="17" selection-start-line="4" selection-start-column="17" selection-end-line="4" selection-end-column="17" />
-              <folding>
-                <element signature="e#141#142#0" expanded="true" />
-                <element signature="e#154#155#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/com/github/gjvnq/BidCraft/PriceType.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="84">
-              <caret line="4" column="9" selection-start-line="4" selection-start-column="9" selection-end-line="4" selection-end-column="9" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/com/github/gjvnq/BidCraft/AutoBid.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="336">
-              <caret line="30" column="5" selection-start-line="19" selection-start-column="4" selection-end-line="30" selection-end-column="5" />
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/test/com/github/gjvnq/BidCraft/AutoBidTest.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="168">
-              <caret line="10" column="5" selection-start-line="10" selection-start-column="5" selection-end-line="10" selection-end-column="5" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-    </leaf>
-  </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="JUnit4 Test Class" />
         <option value="Enum" />
         <option value="Class" />
+        <option value="JUnit4 Test Class" />
       </list>
     </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
-  </component>
-  <component name="IdeDocumentHistory">
-    <option name="CHANGED_PATHS">
-      <list>
-        <option value="$PROJECT_DIR$/pom.xml" />
-        <option value="$PROJECT_DIR$/src/com/github/gjvnq/BidCraft/Market.java" />
-        <option value="$PROJECT_DIR$/src/com/github/gjvnq/BidCraft/BuyBid.java" />
-        <option value="$PROJECT_DIR$/src/com/github/gjvnq/BidCraft/SellBid.java" />
-        <option value="$PROJECT_DIR$/test/com/github/gjvnq/BidCraft/SimpleBidTest.java" />
-        <option value="$PROJECT_DIR$/test/com/github/gjvnq/BidCraft/AutoBidTest.java" />
-        <option value="$PROJECT_DIR$/src/com/github/gjvnq/BidCraft/AutoBid.java" />
-        <option value="$PROJECT_DIR$/src/com/github/gjvnq/BidCraft/PriceType.java" />
-        <option value="$PROJECT_DIR$/src/com/github/gjvnq/BidCraft/InsufficientFundsException.java" />
-        <option value="$PROJECT_DIR$/src/com/github/gjvnq/BidCraft/SimpleBid.java" />
-        <option value="$PROJECT_DIR$/src/com/github/gjvnq/BidCraft/Bid.java" />
-      </list>
-    </option>
   </component>
   <component name="MavenImportPreferences">
     <option name="importingSettings">
@@ -165,58 +56,12 @@
       </MavenImportingSettings>
     </option>
   </component>
-  <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="260" />
-    <option name="y" value="53" />
-    <option name="width" value="1400" />
-    <option name="height" value="1000" />
-  </component>
+  <component name="ProjectId" id="1OtEqo9SLrOxPjpXzeYgoM39W2I" />
   <component name="ProjectLevelVcsManager">
     <ConfirmationsSetting value="2" id="Add" />
   </component>
-  <component name="ProjectView">
-    <navigator proportions="" version="1">
-      <foldersAlwaysOnTop value="true" />
-    </navigator>
-    <panes>
-      <pane id="PackagesPane" />
-      <pane id="ProjectPane">
-        <subPane>
-          <expand>
-            <path>
-              <item name="BidCraft" type="b2602c69:ProjectViewProjectNode" />
-              <item name="BidCraft" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="BidCraft" type="b2602c69:ProjectViewProjectNode" />
-              <item name="BidCraft" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="BidCraft" type="b2602c69:ProjectViewProjectNode" />
-              <item name="BidCraft" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="BidCraft" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="BidCraft" type="b2602c69:ProjectViewProjectNode" />
-              <item name="BidCraft" type="462c0819:PsiDirectoryNode" />
-              <item name="test" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="BidCraft" type="b2602c69:ProjectViewProjectNode" />
-              <item name="BidCraft" type="462c0819:PsiDirectoryNode" />
-              <item name="test" type="462c0819:PsiDirectoryNode" />
-              <item name="BidCraft" type="462c0819:PsiDirectoryNode" />
-            </path>
-          </expand>
-          <select />
-        </subPane>
-      </pane>
-      <pane id="Scope" />
-    </panes>
-  </component>
   <component name="PropertiesComponent">
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary" value="JUnit4" />
     <property name="com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit4" value="" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
@@ -224,7 +69,12 @@
   </component>
   <component name="RecentsManager">
     <key name="CreateTestDialog.RecentsKey">
+      <recent name="com.github.gjvnq.BidCraft.Model" />
       <recent name="com.github.gjvnq.BidCraft" />
+    </key>
+    <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
+      <recent name="com.github.gjvnq.BidCraft" />
+      <recent name="com.github.gjvnq.BidCraft.Model" />
     </key>
     <key name="CreateTestDialog.Recents.Supers">
       <recent name="" />
@@ -339,138 +189,15 @@
     </task>
     <servers />
   </component>
-  <component name="ToolWindowManager">
-    <frame x="0" y="27" width="1920" height="1053" extended-state="6" />
-    <editor active="true" />
-    <layout>
-      <window_info id="Image Layers" />
-      <window_info id="Designer" />
-      <window_info id="UI Designer" />
-      <window_info id="Capture Tool" />
-      <window_info id="Favorites" side_tool="true" />
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.25" />
-      <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
-      <window_info anchor="bottom" id="Version Control" />
-      <window_info anchor="bottom" id="Terminal" />
-      <window_info anchor="bottom" id="Event Log" side_tool="true" />
-      <window_info anchor="bottom" id="Message" order="0" />
-      <window_info anchor="bottom" id="Find" order="1" />
-      <window_info anchor="bottom" id="Run" order="2" weight="0.32894737" />
-      <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
-      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
-      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
-      <window_info anchor="bottom" id="TODO" order="6" />
-      <window_info anchor="right" id="Palette" />
-      <window_info anchor="right" id="Theme Preview" />
-      <window_info anchor="right" id="Maven" />
-      <window_info anchor="right" id="Capture Analysis" />
-      <window_info anchor="right" id="Palette&#9;" />
-      <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
-      <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
-      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
-    </layout>
-  </component>
-  <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/pom.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="273">
-          <caret line="79" column="22" selection-start-line="79" selection-start-column="22" selection-end-line="79" selection-end-column="22" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/github/gjvnq/BidCraft/OldBid.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1512">
-          <caret line="94" selection-start-line="94" selection-end-line="100" selection-end-column="5" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/test/com/github/gjvnq/BidCraft/AutoBidTest.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="168">
-          <caret line="10" column="5" selection-start-line="10" selection-start-column="5" selection-end-line="10" selection-end-column="5" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/github/gjvnq/BidCraft/Market.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="21">
-          <caret line="1" selection-start-line="1" selection-end-line="7" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/test/com/github/gjvnq/BidCraft/SimpleBidTest.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="189">
-          <caret line="11" column="1" selection-start-line="11" selection-start-column="1" selection-end-line="11" selection-end-column="1" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/github/gjvnq/BidCraft/AutoBid.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="336">
-          <caret line="30" column="5" selection-start-line="19" selection-start-column="4" selection-end-line="30" selection-end-column="5" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/github/gjvnq/BidCraft/PriceType.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="84">
-          <caret line="4" column="9" selection-start-line="4" selection-start-column="9" selection-end-line="4" selection-end-column="9" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/github/gjvnq/BidCraft/InsufficientFundsException.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="84">
-          <caret line="4" column="17" selection-start-line="4" selection-start-column="17" selection-end-line="4" selection-end-column="17" />
-          <folding>
-            <element signature="e#141#142#0" expanded="true" />
-            <element signature="e#154#155#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/github/gjvnq/BidCraft/SimpleBid.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-271">
-          <caret line="10" column="20" selection-start-line="10" selection-start-column="20" selection-end-line="10" selection-end-column="20" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/github/gjvnq/BidCraft/Bid.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="21">
-          <caret line="1" selection-start-line="1" selection-end-line="1" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#278#279#0" expanded="true" />
-            <element signature="e#307#308#0" expanded="true" />
-            <element signature="e#347#348#0" expanded="true" />
-            <element signature="e#378#379#0" expanded="true" />
-            <element signature="e#415#416#0" expanded="true" />
-            <element signature="e#442#443#0" expanded="true" />
-            <element signature="e#476#477#0" expanded="true" />
-            <element signature="e#505#506#0" expanded="true" />
-            <element signature="e#1072#1073#0" expanded="true" />
-            <element signature="e#1107#1108#0" expanded="true" />
-            <element signature="e#483#484#0" expanded="true" />
-            <element signature="e#503#504#0" expanded="true" />
-            <element signature="e#564#565#0" expanded="true" />
-            <element signature="e#603#604#0" expanded="true" />
-            <element signature="e#1212#1213#0" expanded="true" />
-            <element signature="e#1239#1240#0" expanded="true" />
-            <element signature="e#1091#1092#0" expanded="true" />
-            <element signature="e#1123#1124#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
   </component>
 </project>
