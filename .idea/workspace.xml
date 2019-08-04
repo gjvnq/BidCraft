@@ -2,30 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="d02125a0-a833-4048-a186-80b997814ef9" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/com/github/gjvnq/BidCraft/Model/AuctionBid.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/github/gjvnq/BidCraft/Model/AuctionOrder.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/github/gjvnq/BidCraft/Model/Config.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/github/gjvnq/BidCraft/Model/DepositException.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/github/gjvnq/BidCraft/Model/InsufficientFundsException.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/github/gjvnq/BidCraft/Model/MoneyException.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/github/gjvnq/BidCraft/Model/OrderType.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/github/gjvnq/BidCraft/Model/Ref.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/github/gjvnq/BidCraft/Model/StandOrder.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/github/gjvnq/BidCraft/Model/Utils.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/test/com/github/gjvnq/BidCraft/Model/AuctionBidTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_bukkit_bukkit_1_14_4_R0_1_SNAPSHOT.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_bukkit_bukkit_1_14_4_R0_1_SNAPSHOT.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/github/gjvnq/BidCraft/AutoBid.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/github/gjvnq/BidCraft/Model/InstantOrder.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/github/gjvnq/BidCraft/Bid.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/github/gjvnq/BidCraft/Model/Order.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/github/gjvnq/BidCraft/BidType.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/github/gjvnq/BidCraft/InsufficientFundsException.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/github/gjvnq/BidCraft/Market.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/github/gjvnq/BidCraft/Model/Market.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/github/gjvnq/BidCraft/PriceType.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/github/gjvnq/BidCraft/Model/PriceType.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/github/gjvnq/BidCraft/SimpleBid.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/com/github/gjvnq/BidCraft/AutoBidTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/test/com/github/gjvnq/BidCraft/Model/InstantStandOrderTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/com/github/gjvnq/BidCraft/SimpleBidTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/test/com/github/gjvnq/BidCraft/Model/StandOrderTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -194,7 +172,9 @@
       <map>
         <entry key="MAIN">
           <value>
-            <State />
+            <State>
+              <option name="COLUMN_ORDER" />
+            </State>
           </value>
         </entry>
       </map>
