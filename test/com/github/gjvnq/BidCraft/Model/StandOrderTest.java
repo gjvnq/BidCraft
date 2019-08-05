@@ -1,12 +1,10 @@
 package com.github.gjvnq.BidCraft.Model;
 
-import org.junit.Before;
-
-import static org.junit.Assert.*;
+import org.junit.jupiter.api.BeforeAll;
 
 public class StandOrderTest {
 
-	@Before
+	@BeforeAll
 	public void setUp() throws Exception {
 	}
 }

@@ -6,7 +6,8 @@ import org.bukkit.OfflinePlayer;
 import java.time.Duration;
 import java.time.Instant;
 
-public class AuctionBid {
+public class AuctionBid extends ThingWithUUID {
+	protected boolean canceled;
 	protected OfflinePlayer player;
 	protected AuctionOrder order;
 	protected double bestOffer;
@@ -60,5 +61,20 @@ public class AuctionBid {
 	public boolean isCancellable() {
 		Duration diff = Duration.between(this.placedAt, Instant.now());
 		return diff.compareTo(Config.getBidCancelInterval()) <= 0;
+	}
+
+	public void cancel() throws UncancellableException {
+		if (!isCancellable()) {
+			try {
+				throw new UncancellableException(this.toString());
+			} catch (Exception e) {
+				throw new UncancellableException(e.toString());
+			}
+		}
+		canceled = true;
+	}
+
+	public String toString() {
+		return String.format("AuctionBid{uuid: %s, auctionOrder.uuid: %s, bestOffer: %.6f player: %s}", uuid, order.getUUID(), bestOffer, player.getName());
 	}
 }

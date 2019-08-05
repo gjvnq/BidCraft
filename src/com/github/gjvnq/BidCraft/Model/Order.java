@@ -10,7 +10,7 @@ import java.util.Iterator;
 /**
  * Abstract order type. Always execute partially looking for the best  possible profit.
  */
-public abstract class Order {
+public abstract class Order extends ThingWithUUID {
     protected OfflinePlayer player;
     protected double unitPrice, revenue;
     protected Instant placedAt;
