@@ -4,6 +4,7 @@ import net.milkbowl.vault.economy.Economy;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.inventory.ItemStack;
 
+import java.time.Duration;
 import java.time.Instant;
 import java.util.ArrayList;
 
@@ -35,6 +36,14 @@ public class AuctionOrder extends StandOrder {
 	}
 
 	protected AuctionOrder(OfflinePlayer player, ItemStack itemStack, OrderType type, double unitPrice,
+	                       double blockedAmount, Duration duration) {
+		super(player, itemStack, type, unitPrice, blockedAmount);
+		this.timeLimit = this.placedAt.plus(duration);
+		this.bids = new ArrayList<AuctionBid>();
+
+	}
+
+	protected AuctionOrder(OfflinePlayer player, ItemStack itemStack, OrderType type, double unitPrice,
 	                     double blockedAmount, Instant timeLimit) {
 		super(player, itemStack, type, unitPrice, blockedAmount);
 		this.timeLimit = timeLimit;
@@ -42,10 +51,10 @@ public class AuctionOrder extends StandOrder {
 	}
 
 	/**
-	 * @return true if there are no more items available (i.e. amount <= 0) AND the time limit for the offer has passed.
+	 * @return true if there are no more items available (i.e. amount <= 0) OR the time limit for the offer has passed.
 	 */
 	public boolean isComplete() {
-		return getAmount() <= 0 && Instant.now().isBefore(timeLimit);
+		return getAmount() <= 0 || Instant.now().isAfter(timeLimit);
 	}
 
 	@Override
@@ -62,11 +71,15 @@ public class AuctionOrder extends StandOrder {
 	 */
 	@Override
 	public boolean isExecutable() {
-		return Instant.now().isAfter(timeLimit);
+		return Instant.now().isBefore(timeLimit);
 	}
 
 	@Override
 	protected void computePriceAndAmount(Order bestOther) {
+
+	}
+
+	public void execute() {
 
 	}
 
