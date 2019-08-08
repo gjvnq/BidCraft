@@ -5,6 +5,10 @@ import net.milkbowl.vault.economy.EconomyResponse;
 import org.bukkit.OfflinePlayer;
 
 public class Utils {
+	public static final int LessThan = -1;
+	public static final int Equal = 0;
+	public static final int GreaterThan = +1;
+
 	static void withdrawMoney(Economy econ, OfflinePlayer player, double amount) throws InsufficientFundsException {
 		if (amount < 0) {
 			throw new IllegalArgumentException("amount MUST be non-negative");

@@ -11,6 +11,7 @@ import java.time.Duration;
 import java.util.concurrent.TimeUnit;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @Execution(ExecutionMode.CONCURRENT)
@@ -29,7 +30,7 @@ public class AuctionOrderTest {
 		AuctionOrder order = new AuctionOrder(player, itemStack, OrderType.BUY, 2,
 		100, duration);
 		assertFalse(order.isComplete());
-		assertTrue(order.isExecutable());
+		assertFalse(order.isExecutable());
 
 		TimeUnit.SECONDS.sleep(seconds_duration+1);
 
@@ -51,19 +52,9 @@ public class AuctionOrderTest {
 				100, duration);
 
 		AuctionBid bid1 = new AuctionBid(order, player, unitPrice-1, amountOffered);
-		order.addBid(bid1);
-		AuctionBid bid2 = new AuctionBid(order, player, unitPrice-0.5, amountOffered);
-		order.addBid(bid2);
-
-		order.execute();
-
-		assertTrue(order.isExecutable());
-		assertFalse(order.isComplete());
-
-		TimeUnit.SECONDS.sleep(seconds_duration+1);
-
-		assertFalse(order.isExecutable());
-		assertTrue(order.isComplete());
+		assertThrows(IllegalArgumentException.class, () -> {
+			order.addBid(bid1);
+		});
 	}
 
 	@Test
@@ -81,8 +72,9 @@ public class AuctionOrderTest {
 
 		AuctionBid bid1 = new AuctionBid(order, player, unitPrice+1, amountOffered);
 		order.addBid(bid1);
-		AuctionBid bid2 = new AuctionBid(order, player, unitPrice-0.5, amountOffered);
-		order.addBid(bid2);
+
+		assertTrue(order.isExecutable());
+		assertFalse(order.isComplete());
 
 		order.execute();
 

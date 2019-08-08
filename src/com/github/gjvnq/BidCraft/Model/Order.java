@@ -1,7 +1,9 @@
 package com.github.gjvnq.BidCraft.Model;
 
+import net.milkbowl.vault.economy.Economy;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.inventory.ItemStack;
+import org.jetbrains.annotations.NotNull;
 
 import java.time.Instant;
 import java.util.ArrayList;
@@ -10,12 +12,28 @@ import java.util.Iterator;
 /**
  * Abstract order type. Always execute partially looking for the best  possible profit.
  */
-public abstract class Order extends ThingWithUUID {
+public abstract class Order extends ThingWithUUID implements Deletable {
     protected OfflinePlayer player;
     protected double unitPrice, revenue;
     protected Instant placedAt;
     protected ItemStack itemStack;
     protected OrderType type;
+	protected boolean isCancelled;
+
+	/**
+	 * @return true if the player asked this order for deletion
+	 */
+	public boolean isCancelled() {
+		return isCancelled;
+	}
+
+
+	/**
+	 * @return cancels this order.
+	 */
+	public void cancel() {
+		isCancelled = true;
+	}
 
     /**
      * @return who placed this order.
@@ -88,9 +106,25 @@ public abstract class Order extends ThingWithUUID {
 		return true;
 	}
 
-	protected abstract boolean matches(Order other);
+	/**
+	 * @return true if the order can be deleted from the system.
+	 */
+	public boolean isDeletable() {
+		return this.isComplete();
+	}
 
-    protected boolean matchesBasics(Order other) {
+	/**
+	 * @return deletes this order and refunds any necessary values and items.
+	 */
+	public void delete(Economy econ) throws Exception {
+		if (!this.isDeletable()) {
+			throw new IllegalStateException("this order is not currently deletable");
+		}
+	}
+
+	protected abstract boolean matches(@NotNull Order other);
+
+    protected boolean matchesBasics(@NotNull Order other) {
         if (this.type == other.type) {
             return false;
         }
@@ -120,7 +154,7 @@ public abstract class Order extends ThingWithUUID {
 
 	protected abstract void computePriceAndAmount(Order bestOther);
 
-	public void executeFromList(ArrayList<Order> orders) {
+	public void executeFromList(@NotNull ArrayList<Order> orders) {
 		Order bestOther = getBestBid(orders);
 		while (!this.isComplete() && bestOther != null) {
 			computePriceAndAmount(bestOther);
@@ -128,7 +162,7 @@ public abstract class Order extends ThingWithUUID {
 		}
 	}
 
-	protected Order getBestBid(ArrayList<Order> orders) {
+	protected Order getBestBid(@NotNull ArrayList<Order> orders) {
 		Iterator<Order> it = orders.iterator();
 		Order bestOther = null;
 		while (it.hasNext()) {

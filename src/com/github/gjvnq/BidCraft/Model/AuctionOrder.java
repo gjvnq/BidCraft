@@ -3,10 +3,12 @@ package com.github.gjvnq.BidCraft.Model;
 import net.milkbowl.vault.economy.Economy;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.inventory.ItemStack;
+import org.jetbrains.annotations.NotNull;
 
 import java.time.Duration;
 import java.time.Instant;
 import java.util.ArrayList;
+import java.util.Collections;
 
 /**
  * An order that will wait for the best possible offer until a certain time. This order ONLY executes fully.
@@ -67,23 +69,58 @@ public class AuctionOrder extends StandOrder {
 	}
 
 	/**
-	 * @return true if the auction has already closed.
+	 * @return true if the auction has not already closed AND it there are are bids.
 	 */
 	@Override
 	public boolean isExecutable() {
-		return Instant.now().isBefore(timeLimit);
+		return Instant.now().isBefore(timeLimit) && this.bids.size() != 0;
+	}
+
+	@Override
+	/**
+	 * @return true if the auction has already closed OR it has completed.
+	 */
+	public boolean isDeletable() {
+		return Instant.now().isAfter(timeLimit) || this.isComplete();
+	}
+
+	@Override
+	public void delete(Economy econ) throws Exception {
+		if (!this.isDeletable()) {
+			throw new IllegalStateException("this order is not currently deletable");
+		}
+		for (AuctionBid bid : this.bids) {
+			bid.delete(econ);
+		}
 	}
 
 	@Override
 	protected void computePriceAndAmount(Order bestOther) {
-
+		// this is left intentionally blank
 	}
 
-	public void execute() {
-
+	@Override
+	public void executeFromList(ArrayList<Order> orders) {
+		execute();
 	}
 
-	public void addBid(AuctionBid auctionBid) {
-		this.bids.add(auctionBid);
+	protected void execute() {
+		Collections.sort(this.bids);
+	}
+
+	public void addBid(@NotNull AuctionBid bid) {
+		if (!bid.type.matches(this.type)) {
+			throw new IllegalArgumentException("incompatible bid type");
+		}
+		if (bid.bestOffer < this.unitPrice) {
+			throw new IllegalArgumentException("bid best offer is too low");
+		}
+		if (bid.maxAmount > this.getAmount()) {
+			throw new IllegalArgumentException("bid best offer amount it too high");
+		}
+		if (bid.maxAmount < 0) {
+			throw new IllegalArgumentException("bid best offer amount cannot be negative");
+		}
+		this.bids.add(bid);
 	}
 }
