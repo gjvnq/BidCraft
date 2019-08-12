@@ -10,7 +10,7 @@ import java.time.Instant;
 public class AuctionBid extends ThingWithUUID implements Comparable<AuctionBid>, Deletable {
 	protected boolean canceled;
 	protected OfflinePlayer player;
-	protected AuctionOrder order;
+	protected Auction order;
 	protected double bestOffer, maxAmount, revenue;
 	protected OrderType type;
 	protected Instant placedAt;
@@ -22,7 +22,7 @@ public class AuctionBid extends ThingWithUUID implements Comparable<AuctionBid>,
 		return player;
 	}
 
-	public AuctionOrder getOrder() {
+	public Auction getOrder() {
 		return order;
 	}
 
@@ -38,7 +38,7 @@ public class AuctionBid extends ThingWithUUID implements Comparable<AuctionBid>,
 		return placedAt;
 	}
 
-	public AuctionBid(Economy econ, AuctionOrder order, OfflinePlayer player, double bestOffer, double maxAmount) throws InsufficientFundsException {
+	public AuctionBid(Economy econ, Auction order, OfflinePlayer player, double bestOffer, double maxAmount) throws InsufficientFundsException {
 		this(order, player, bestOffer, maxAmount);
 
 		if (this.type == OrderType.BUY) {
@@ -51,7 +51,7 @@ public class AuctionBid extends ThingWithUUID implements Comparable<AuctionBid>,
 		this.placedAt = Instant.now();
 	}
 
-	protected AuctionBid(@NotNull AuctionOrder order, @NotNull OfflinePlayer player, double bestOffer, double maxAmount) {
+	protected AuctionBid(@NotNull Auction order, @NotNull OfflinePlayer player, double bestOffer, double maxAmount) {
 		this();
 		this.order = order;
 		this.player = player;
@@ -130,12 +130,10 @@ public class AuctionBid extends ThingWithUUID implements Comparable<AuctionBid>,
 		}
 	}
 
-	@Override
 	public void delete(Economy econ) throws Exception {
-//		throw new NotImplementedException();
 		Utils.moveMoney(econ, player, revenue);
 		if (this.type == OrderType.SELL) {
-			Market.Main.
+			Market.Main.giveTo(player, order.itemStack);
 		}
 	}
 }

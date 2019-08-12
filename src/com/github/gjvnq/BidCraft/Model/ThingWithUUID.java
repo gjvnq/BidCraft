@@ -10,9 +10,14 @@ public abstract class ThingWithUUID {
 	}
 
 	public UUID getUUID() {
-		if (this == null) {
-			return UUID.fromString("00000000-0000-0000-0000-000000000000");
-		}
 		return this.uuid;
+	}
+
+	public boolean sameUUID(ThingWithUUID other) {
+		return uuid.equals(other.uuid);
+	}
+
+	public int compareUUID(ThingWithUUID other) {
+		return uuid.compareTo(other.uuid);
 	}
 }

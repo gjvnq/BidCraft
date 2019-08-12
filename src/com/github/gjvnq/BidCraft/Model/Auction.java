@@ -16,40 +16,91 @@ import java.util.Collections;
  * Note that, in case of a SELL, the buyer will pay the second highest price. And in case of a BUY, the seller will
  * get the second lowest price. This is done in order to incentivize people to bid at their break even point.
  */
-public class AuctionOrder extends StandOrder {
+public class Auction extends ThingWithUUID implements BasicMatchable {
+	protected OfflinePlayer player;
+	protected double unitPrice, revenue;
+	protected Instant placedAt;
+	protected ItemStack itemStack;
+	protected OrderType type;
 	protected Instant timeLimit;
 	protected ArrayList<AuctionBid> bids;
 
-	public static AuctionOrder New(Economy econ, OfflinePlayer player, ItemStack itemStack,
-	                               OrderType type, PriceType priceType, double price,
-	                               Instant timeLimit)
+	public OfflinePlayer getPlayer() {
+		return player;
+	}
+
+	public double getUnitPrice() {
+		return unitPrice;
+	}
+
+	public double getRevenue() {
+		return revenue;
+	}
+
+	public int getAmount() {
+		return itemStack.getAmount();
+	}
+
+	public Instant getPlacedAt() {
+		return placedAt;
+	}
+
+	public ItemStack getItemStack() {
+		return itemStack;
+	}
+
+	public OrderType getType() {
+		return type;
+	}
+
+	public Instant getTimeLimit() {
+		return timeLimit;
+	}
+
+	public ArrayList<AuctionBid> getBids() {
+		return (ArrayList<AuctionBid>) bids.clone();
+	}
+
+	public static Auction New(Economy econ, OfflinePlayer player, ItemStack itemStack,
+	                          OrderType type, PriceType priceType, double price,
+	                          Instant timeLimit)
 			throws IllegalArgumentException, InsufficientFundsException {
 
 		Ref<Double> unitPrice = new Ref<Double>(0.0);
 		Ref<Double> totalPrice = new Ref<Double>(0.0);
-		checkArgsAndCalcPrice(itemStack, unitPrice, totalPrice, price, priceType);
+		Utils.checkArgsAndCalcPrice(itemStack, unitPrice, totalPrice, price, priceType);
 
 		double blockedAmount = totalPrice.val;
 		if (type == OrderType.BUY) {
 			Utils.withdrawMoney(econ, player, blockedAmount);
 		}
 
-		return new AuctionOrder(player, itemStack, OrderType.SELL, unitPrice.val, blockedAmount, timeLimit);
+		return new Auction(player, itemStack, OrderType.SELL, unitPrice.val, blockedAmount, timeLimit);
 	}
 
-	protected AuctionOrder(OfflinePlayer player, ItemStack itemStack, OrderType type, double unitPrice,
-	                       double blockedAmount, Duration duration) {
-		super(player, itemStack, type, unitPrice, blockedAmount);
+	protected Auction(OfflinePlayer player, ItemStack itemStack, OrderType type, double unitPrice,
+	                  double blockedAmount, Duration duration) {
+		this(player, itemStack, type, unitPrice, blockedAmount);
 		this.timeLimit = this.placedAt.plus(duration);
 		this.bids = new ArrayList<AuctionBid>();
 
 	}
 
-	protected AuctionOrder(OfflinePlayer player, ItemStack itemStack, OrderType type, double unitPrice,
-	                     double blockedAmount, Instant timeLimit) {
-		super(player, itemStack, type, unitPrice, blockedAmount);
+	protected Auction(OfflinePlayer player, ItemStack itemStack, OrderType type, double unitPrice,
+	                  double blockedAmount, Instant timeLimit) {
+		this(player, itemStack, type, unitPrice, blockedAmount);
 		this.timeLimit = timeLimit;
 		this.bids = new ArrayList<AuctionBid>();
+	}
+
+	protected Auction(OfflinePlayer player, ItemStack itemStack, OrderType type, double unitPrice,
+	                     double blockedAmount) {
+		this.revenue = blockedAmount;
+		this.player = player;
+		this.itemStack = itemStack;
+		this.type = type;
+		this.unitPrice = unitPrice;
+		this.placedAt = Instant.now();
 	}
 
 	/**
@@ -59,24 +110,13 @@ public class AuctionOrder extends StandOrder {
 		return getAmount() <= 0 || Instant.now().isAfter(timeLimit);
 	}
 
-	@Override
-	protected boolean matches(Order other) {
-		// AuctionOrders can only match other AuctionOrders
-		if (!other.getClass().equals(AuctionOrder.class)) {
-			return false;
-		}
-		return matchesBasics(other);
-	}
-
 	/**
 	 * @return true if the auction has not already closed AND it there are are bids.
 	 */
-	@Override
 	public boolean isExecutable() {
 		return Instant.now().isBefore(timeLimit) && this.bids.size() != 0;
 	}
 
-	@Override
 	/**
 	 * @return true if the auction has already closed OR it has completed.
 	 */
@@ -84,7 +124,6 @@ public class AuctionOrder extends StandOrder {
 		return Instant.now().isAfter(timeLimit) || this.isComplete();
 	}
 
-	@Override
 	public void delete(Economy econ) throws Exception {
 		if (!this.isDeletable()) {
 			throw new IllegalStateException("this order is not currently deletable");
@@ -94,17 +133,7 @@ public class AuctionOrder extends StandOrder {
 		}
 	}
 
-	@Override
-	protected void computePriceAndAmount(Order bestOther) {
-		// this is left intentionally blank
-	}
-
-	@Override
-	public void executeFromList(ArrayList<Order> orders) {
-		execute();
-	}
-
-	protected void execute() {
+	public void execute() {
 		Collections.sort(this.bids);
 	}
 

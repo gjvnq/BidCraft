@@ -1,5 +1,6 @@
 package com.github.gjvnq.BidCraft.Model;
 
+import net.milkbowl.vault.economy.Economy;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.parallel.Execution;
@@ -28,14 +29,16 @@ public class AuctionBidTest {
 	@Test
 	public void cancel1() throws UncancellableException {
 		AuctionBid bid = new AuctionBid();
-		bid.cancel();
+		Economy econ = new FakeEconomy();
+		bid.cancel(econ);
 	}
 
 	@Test
 	public void cancel2() throws UncancellableException, InterruptedException {
 		AuctionBid bid = new AuctionBid();
 		TimeUnit.SECONDS.sleep(Config.getBidCancelInterval().getSeconds()-1);
-		bid.cancel();
+		Economy econ = new FakeEconomy();
+		bid.cancel(econ);
 	}
 
 	@Test
@@ -43,7 +46,10 @@ public class AuctionBidTest {
 		AuctionBid bid = new AuctionBid();
 		TimeUnit.SECONDS.sleep(Config.getBidCancelInterval().getSeconds()+1);
 		assertFalse(bid.isCancellable());
-		assertThrows(UncancellableException.class, bid::cancel);
+		Economy econ = new FakeEconomy();
+		assertThrows(UncancellableException.class, () -> {
+			bid.cancel(econ);
+		});
 	}
 
 	@Test

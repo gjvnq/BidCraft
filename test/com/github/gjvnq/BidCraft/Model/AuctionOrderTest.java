@@ -27,7 +27,7 @@ public class AuctionOrderTest {
 		FakeOfflinePlayer player = new FakeOfflinePlayer();
 		ItemStack itemStack = new ItemStack(Material.DIAMOND, 4);
 		Duration duration = Duration.ofSeconds(seconds_duration);
-		AuctionOrder order = new AuctionOrder(player, itemStack, OrderType.BUY, 2,
+		Auction order = new Auction(player, itemStack, OrderType.BUY, 2,
 		100, duration);
 		assertFalse(order.isComplete());
 		assertFalse(order.isExecutable());
@@ -48,7 +48,7 @@ public class AuctionOrderTest {
 		Duration duration = Duration.ofSeconds(seconds_duration);
 
 
-		AuctionOrder order = new AuctionOrder(player, itemStack, OrderType.SELL, unitPrice,
+		Auction order = new Auction(player, itemStack, OrderType.SELL, unitPrice,
 				100, duration);
 
 		AuctionBid bid1 = new AuctionBid(order, player, unitPrice-1, amountOffered);
@@ -67,7 +67,7 @@ public class AuctionOrderTest {
 		Duration duration = Duration.ofSeconds(seconds_duration);
 
 
-		AuctionOrder order = new AuctionOrder(player, itemStack, OrderType.SELL, unitPrice,
+		Auction order = new Auction(player, itemStack, OrderType.SELL, unitPrice,
 				100, duration);
 
 		AuctionBid bid1 = new AuctionBid(order, player, unitPrice+1, amountOffered);

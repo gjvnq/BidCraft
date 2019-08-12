@@ -7,8 +7,16 @@ import org.jetbrains.annotations.NotNull;
 
 import java.time.Instant;
 import java.util.ArrayList;
+import java.util.Iterator;
 
-public class InstantOrder {
+/**
+ * An order that will be executed as soon as possible. If there are multiple
+ * matching orders, the best one will be chosen.
+ *
+ * It is called a StandingOrder because the order will stand for an
+ * indeterminate amount of time and it mimics a shop stand.
+ */
+public class StandingOrder extends ThingWithUUID implements BasicMatchable {
 	protected OfflinePlayer player;
 	protected double unitPrice, revenue;
 	protected Instant placedAt;
@@ -134,10 +142,59 @@ public class InstantOrder {
 	}
 
 	public void executeFromList(@NotNull ArrayList<StandingOrder> orders) {
-		//  The ArrayList<StandingOrder>  part is correct!
+		StandingOrder bestOther = getBestBid(orders);
+		while (!this.isComplete() && bestOther != null) {
+			computePriceAndAmount(bestOther);
+			bestOther = getBestBid(orders);
+		}
 	}
 
-	public static InstantOrder New(Economy econ, OfflinePlayer player, ItemStack itemStack,
+	protected StandingOrder getBestBid(@NotNull ArrayList<StandingOrder> orders) {
+		Iterator<StandingOrder> it = orders.iterator();
+		StandingOrder bestOther = null;
+		while (it.hasNext()) {
+			StandingOrder other = it.next();
+			if (this.matches(other)) {
+				continue;
+			}
+			if (bestOther == null) {
+				bestOther = other;
+			}
+			if (this.type == OrderType.SELL && other.unitPrice > bestOther.unitPrice) {
+				bestOther = other;
+			}
+			if (this.type == OrderType.BUY && other.unitPrice < bestOther.unitPrice) {
+				bestOther = other;
+			}
+		}
+		return bestOther;
+	}
+
+	protected void executeMe(int finalAmount, double finalPrice) {
+		itemStack.setAmount(itemStack.getAmount()-finalAmount);
+		if (type == OrderType.SELL) {
+			revenue += finalPrice;
+		}
+		if (type == OrderType.BUY) {
+			revenue -= finalPrice;
+		}
+	}
+
+	protected boolean matches(StandingOrder other) {
+		return Utils.basicMatch(this, other).isOk();
+	}
+
+
+	protected void computePriceAndAmount(StandingOrder other) {
+		double finalUnitPrice = (this.unitPrice + other.unitPrice)/2;
+		int finalAmount = Math.min(this.getAmount(), other.getAmount());
+		double finalPrice = finalUnitPrice*finalAmount;
+
+		this.executeMe(finalAmount, finalPrice);
+		other.executeMe(finalAmount, finalPrice);
+	}
+
+	public static StandingOrder New(Economy econ, OfflinePlayer player, ItemStack itemStack,
 	                                OrderType type, PriceType priceType, double price) throws IllegalArgumentException, InsufficientFundsException {
 		Ref<Double> unitPrice = new Ref<Double>(0.0);
 		Ref<Double> totalPrice = new Ref<Double>(0.0);
@@ -148,10 +205,10 @@ public class InstantOrder {
 			Utils.withdrawMoney(econ, player, blockedAmount);
 		}
 
-		return new InstantOrder(player, itemStack, OrderType.SELL, unitPrice.val, blockedAmount);
+		return new StandingOrder(player, itemStack, OrderType.SELL, unitPrice.val, blockedAmount);
 	}
 
-	protected InstantOrder(OfflinePlayer player, ItemStack itemStack, OrderType type, double unitPrice,
+	protected StandingOrder(OfflinePlayer player, ItemStack itemStack, OrderType type, double unitPrice,
 	                        double blockedAmount) {
 		this.revenue = blockedAmount;
 		this.player = player;
