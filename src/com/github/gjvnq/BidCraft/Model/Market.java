@@ -7,14 +7,21 @@ import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Set;
+import java.util.HashSet;
 
 public class Market {
     private ArrayList<StandingOrder> sellOrders, buyOrders;
-    private Set<Deletable> stuffToDelete;
+    private HashSet<Deletable> stuffToDelete;
 	public static Market Main = new Market();
 	// Here we store the items we want players to be able to get. (We can't transfer items when they are offline)
 	protected HashMap<OfflinePlayer, ArrayList<ItemStack>> playerItems;
+
+	public Market() {
+		playerItems = new HashMap<OfflinePlayer, ArrayList<ItemStack>>();
+		stuffToDelete = new HashSet<Deletable>();
+		sellOrders = new ArrayList<StandingOrder>();
+		buyOrders = new ArrayList<StandingOrder>();
+	}
 
     void markForDeletion(Deletable stuff) {
     	this.stuffToDelete.add(stuff);

@@ -4,6 +4,7 @@ import net.milkbowl.vault.economy.Economy;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
+import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 import java.time.Duration;
 import java.time.Instant;
@@ -133,8 +134,32 @@ public class Auction extends ThingWithUUID implements BasicMatchable {
 		}
 	}
 
-	public void execute() {
+	/**
+		@return true if something was done.
+	 **/
+	public boolean execute() {
+		if (bids.size() == 0) {
+			return false;
+		}
+
 		Collections.sort(this.bids);
+		if (bids.size() == 1) {
+			AuctionBid bid = bids.get(0);
+			int actualAmount = Math.min(getAmount(), bid.getMaxAmount());
+			bid.execute(actualAmount, bid.getBestOffer());
+			bid.forceCancel();
+			bids.remove(0);
+			this.deltaAmount(-actualAmount);
+			return true;
+		}
+
+		throw new NotImplementedException();
+	}
+
+	private void deltaAmount(int delta) {
+		int amount = getAmount();
+		amount += delta;
+		itemStack.setAmount(amount);
 	}
 
 	public void addBid(@NotNull AuctionBid bid) {

@@ -11,7 +11,8 @@ public class AuctionBid extends ThingWithUUID implements Comparable<AuctionBid>,
 	protected boolean canceled;
 	protected OfflinePlayer player;
 	protected Auction order;
-	protected double bestOffer, maxAmount, revenue;
+	protected double bestOffer, revenue;
+	protected int maxAmount;
 	protected OrderType type;
 	protected Instant placedAt;
 
@@ -30,6 +31,10 @@ public class AuctionBid extends ThingWithUUID implements Comparable<AuctionBid>,
 		return bestOffer;
 	}
 
+	public int getMaxAmount() {
+		return maxAmount;
+	}
+
 	public OrderType getType() {
 		return type;
 	}
@@ -38,7 +43,7 @@ public class AuctionBid extends ThingWithUUID implements Comparable<AuctionBid>,
 		return placedAt;
 	}
 
-	public AuctionBid(Economy econ, Auction order, OfflinePlayer player, double bestOffer, double maxAmount) throws InsufficientFundsException {
+	public AuctionBid(Economy econ, Auction order, OfflinePlayer player, double bestOffer, int maxAmount) throws InsufficientFundsException {
 		this(order, player, bestOffer, maxAmount);
 
 		if (this.type == OrderType.BUY) {
@@ -51,7 +56,7 @@ public class AuctionBid extends ThingWithUUID implements Comparable<AuctionBid>,
 		this.placedAt = Instant.now();
 	}
 
-	protected AuctionBid(@NotNull Auction order, @NotNull OfflinePlayer player, double bestOffer, double maxAmount) {
+	protected AuctionBid(@NotNull Auction order, @NotNull OfflinePlayer player, double bestOffer, int maxAmount) {
 		this();
 		this.order = order;
 		this.player = player;
@@ -65,12 +70,21 @@ public class AuctionBid extends ThingWithUUID implements Comparable<AuctionBid>,
 		return diff.compareTo(Config.getBidCancelInterval()) <= 0;
 	}
 
-	public void cancel(Economy econ) throws UncancellableException {
+	public void cancel() throws UncancellableException {
 		if (!isCancellable()) {
 			throw new UncancellableException(this.toString());
 		}
-		canceled = true;
-		Market.Main.markForDeletion(this);
+		if (!canceled) {
+			canceled = true;
+			Market.Main.markForDeletion(this);
+		}
+	}
+
+	public void forceCancel() {
+		if (!canceled) {
+			canceled = true;
+			Market.Main.markForDeletion(this);
+		}
 	}
 
 
@@ -121,6 +135,13 @@ public class AuctionBid extends ThingWithUUID implements Comparable<AuctionBid>,
 	}
 
 	void execute(int actualAmount, double actualPrice) {
+		if (actualAmount > this.maxAmount) {
+			throw new IllegalArgumentException("amount is too big");
+		}
+		if (actualPrice > this.bestOffer) {
+			throw new IllegalArgumentException("price is too high");
+		}
+
 		double delta = actualAmount*actualPrice;
 		switch (this.type) {
 			case BUY:
