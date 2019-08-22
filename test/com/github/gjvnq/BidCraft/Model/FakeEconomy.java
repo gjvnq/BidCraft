@@ -9,7 +9,7 @@ import java.util.HashMap;
 import java.util.List;
 
 public class FakeEconomy implements Economy {
-	HashMap<String, Double> bank;
+	HashMap<String, Double> bank = new HashMap<String, Double>();
 	private int fractionalDigits = 2;
 
 	@Override
@@ -69,6 +69,9 @@ public class FakeEconomy implements Economy {
 
 	@Override
 	public double getBalance(String playerName) {
+		if (!bank.containsKey(playerName)) {
+			return 0;
+		}
 		return bank.get(playerName);
 	}
 

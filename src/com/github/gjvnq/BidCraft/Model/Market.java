@@ -10,7 +10,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 
 public class Market {
-    private ArrayList<StandingOrder> sellOrders, buyOrders;
+    private ArrayList<Order> orders;
     private HashSet<Deletable> stuffToDelete;
 	public static Market Main = new Market();
 	// Here we store the items we want players to be able to get. (We can't transfer items when they are offline)
@@ -19,8 +19,7 @@ public class Market {
 	public Market() {
 		playerItems = new HashMap<OfflinePlayer, ArrayList<ItemStack>>();
 		stuffToDelete = new HashSet<Deletable>();
-		sellOrders = new ArrayList<StandingOrder>();
-		buyOrders = new ArrayList<StandingOrder>();
+		orders = new ArrayList<Order>();
 	}
 
     void markForDeletion(Deletable stuff) {

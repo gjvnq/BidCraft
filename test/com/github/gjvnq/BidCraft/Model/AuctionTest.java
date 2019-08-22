@@ -13,7 +13,7 @@ import java.util.concurrent.TimeUnit;
 import static org.junit.jupiter.api.Assertions.*;
 
 @Execution(ExecutionMode.CONCURRENT)
-public class AuctionOrderTest {
+public class AuctionTest {
 	@BeforeAll
 	public static void setUp() {
 		Config.setTestingValues();

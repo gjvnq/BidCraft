@@ -133,8 +133,8 @@ public class InstantOrder {
 				this.getTotalPrice());
 	}
 
-	public void executeFromList(@NotNull ArrayList<StandingOrder> orders) {
-		//  The ArrayList<StandingOrder>  part is correct!
+	public void executeFromList(@NotNull ArrayList<Order> orders) {
+		//  The ArrayList<Order>  part is correct!
 	}
 
 	public static InstantOrder New(Economy econ, OfflinePlayer player, ItemStack itemStack,

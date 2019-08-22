@@ -13,10 +13,10 @@ import java.util.Iterator;
  * An order that will be executed as soon as possible. If there are multiple
  * matching orders, the best one will be chosen.
  *
- * It is called a StandingOrder because the order will stand for an
+ * It is called a Order because the order will stand for an
  * indeterminate amount of time and it mimics a shop stand.
  */
-public class StandingOrder extends ThingWithUUID implements BasicMatchable {
+public class Order extends ThingWithUUID implements BasicMatchable {
 	protected OfflinePlayer player;
 	protected double unitPrice, revenue;
 	protected Instant placedAt;
@@ -46,10 +46,10 @@ public class StandingOrder extends ThingWithUUID implements BasicMatchable {
 	}
 
 	/**
-	 * @return the item and amount that is being sold or bought.
+	 * @return a clone of the item and amount that is being sold or bought.
 	 */
 	public ItemStack getItemStack() {
-		return itemStack;
+		return itemStack.clone();
 	}
 
 	/**
@@ -141,19 +141,19 @@ public class StandingOrder extends ThingWithUUID implements BasicMatchable {
 				this.getTotalPrice());
 	}
 
-	public void executeFromList(@NotNull ArrayList<StandingOrder> orders) {
-		StandingOrder bestOther = getBestBid(orders);
+	public void execute(@NotNull ArrayList<Order> orders) {
+		Order bestOther = getBestBid(orders);
 		while (!this.isComplete() && bestOther != null) {
 			computePriceAndAmount(bestOther);
 			bestOther = getBestBid(orders);
 		}
 	}
 
-	protected StandingOrder getBestBid(@NotNull ArrayList<StandingOrder> orders) {
-		Iterator<StandingOrder> it = orders.iterator();
-		StandingOrder bestOther = null;
+	protected Order getBestBid(@NotNull ArrayList<Order> orders) {
+		Iterator<Order> it = orders.iterator();
+		Order bestOther = null;
 		while (it.hasNext()) {
-			StandingOrder other = it.next();
+			Order other = it.next();
 			if (this.matches(other)) {
 				continue;
 			}
@@ -180,12 +180,12 @@ public class StandingOrder extends ThingWithUUID implements BasicMatchable {
 		}
 	}
 
-	protected boolean matches(StandingOrder other) {
+	protected boolean matches(Order other) {
 		return Utils.basicMatch(this, other).isOk();
 	}
 
 
-	protected void computePriceAndAmount(StandingOrder other) {
+	protected void computePriceAndAmount(Order other) {
 		double finalUnitPrice = (this.unitPrice + other.unitPrice)/2;
 		int finalAmount = Math.min(this.getAmount(), other.getAmount());
 		double finalPrice = finalUnitPrice*finalAmount;
@@ -194,8 +194,8 @@ public class StandingOrder extends ThingWithUUID implements BasicMatchable {
 		other.executeMe(finalAmount, finalPrice);
 	}
 
-	public static StandingOrder New(Economy econ, OfflinePlayer player, ItemStack itemStack,
-	                                OrderType type, PriceType priceType, double price) throws IllegalArgumentException, InsufficientFundsException {
+	public static Order New(Economy econ, OfflinePlayer player, ItemStack itemStack,
+	                        OrderType type, PriceType priceType, double price) throws IllegalArgumentException, InsufficientFundsException {
 		Ref<Double> unitPrice = new Ref<Double>(0.0);
 		Ref<Double> totalPrice = new Ref<Double>(0.0);
 		Utils.checkArgsAndCalcPrice(itemStack, unitPrice, totalPrice, price, priceType);
@@ -205,14 +205,14 @@ public class StandingOrder extends ThingWithUUID implements BasicMatchable {
 			Utils.withdrawMoney(econ, player, blockedAmount);
 		}
 
-		return new StandingOrder(player, itemStack, OrderType.SELL, unitPrice.val, blockedAmount);
+		return new Order(player, itemStack, OrderType.SELL, unitPrice.val, blockedAmount);
 	}
 
-	protected StandingOrder(OfflinePlayer player, ItemStack itemStack, OrderType type, double unitPrice,
-	                        double blockedAmount) {
+	protected Order(OfflinePlayer player, ItemStack itemStack, OrderType type, double unitPrice,
+	                double blockedAmount) {
 		this.revenue = blockedAmount;
 		this.player = player;
-		this.itemStack = itemStack;
+		this.itemStack = itemStack.clone();
 		this.type = type;
 		this.unitPrice = unitPrice;
 		this.placedAt = Instant.now();
