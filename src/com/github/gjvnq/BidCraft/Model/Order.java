@@ -1,6 +1,7 @@
 package com.github.gjvnq.BidCraft.Model;
 
 import net.milkbowl.vault.economy.Economy;
+import org.apache.log4j.Logger;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
@@ -17,6 +18,7 @@ import java.util.Iterator;
  * indeterminate amount of time and it mimics a shop stand.
  */
 public class Order extends ThingWithUUID implements BasicMatchable {
+	protected static Logger logger = Logger.getLogger(Order.class.getName());
 	protected OfflinePlayer player;
 	protected double unitPrice, revenue;
 	protected Instant placedAt;
@@ -133,27 +135,30 @@ public class Order extends ThingWithUUID implements BasicMatchable {
 	 * @return a simple string describing this bid. Ex: "BUY 64xCOAL u=0.015625 f=1.00000"
 	 */
 	public String toString() {
-		return String.format("%s %dx%s u=%.6f t=%.6f",
+		return String.format("%s %s u=%.6f t=%.6f",
 				this.getType().name(),
-				this.getAmount(),
-				this.itemStack.toString(),
+				Utils.itemStackToString(this.itemStack),
 				this.unitPrice,
 				this.getTotalPrice());
 	}
 
 	public void execute(@NotNull ArrayList<Order> orders) {
 		Order bestOther = getBestBid(orders);
+		logger.debug("bestOther = "+bestOther);
 		while (!this.isComplete() && bestOther != null) {
 			computePriceAndAmount(bestOther);
 			bestOther = getBestBid(orders);
+			logger.debug("bestOther = "+bestOther);
 		}
 	}
 
 	protected Order getBestBid(@NotNull ArrayList<Order> orders) {
 		Iterator<Order> it = orders.iterator();
 		Order bestOther = null;
+		logger.debug("this = "+this);
 		while (it.hasNext()) {
 			Order other = it.next();
+			logger.debug("other = "+other);
 			if (this.matches(other)) {
 				continue;
 			}
@@ -162,9 +167,11 @@ public class Order extends ThingWithUUID implements BasicMatchable {
 			}
 			if (this.type == OrderType.SELL && other.unitPrice > bestOther.unitPrice) {
 				bestOther = other;
+				logger.debug("bestOther <- 1 "+bestOther);
 			}
 			if (this.type == OrderType.BUY && other.unitPrice < bestOther.unitPrice) {
 				bestOther = other;
+				logger.debug("bestOther <- 2 "+bestOther);
 			}
 		}
 		return bestOther;
@@ -205,7 +212,7 @@ public class Order extends ThingWithUUID implements BasicMatchable {
 			Utils.withdrawMoney(econ, player, blockedAmount);
 		}
 
-		return new Order(player, itemStack, OrderType.SELL, unitPrice.val, blockedAmount);
+		return new Order(player, itemStack, type, unitPrice.val, blockedAmount);
 	}
 
 	protected Order(OfflinePlayer player, ItemStack itemStack, OrderType type, double unitPrice,

@@ -2,8 +2,12 @@ package com.github.gjvnq.BidCraft.Model;
 
 import net.milkbowl.vault.economy.Economy;
 import net.milkbowl.vault.economy.EconomyResponse;
+import org.apache.log4j.Logger;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.inventory.ItemStack;
+
+import java.io.PrintWriter;
+import java.io.StringWriter;
 
 public class Utils {
 	public static final int LessThan = -1;
@@ -71,9 +75,38 @@ public class Utils {
 		if (a.getType() == OrderType.BUY && a.getUnitPrice() < b.getUnitPrice()) {
 			return new Result<>("incompatible prices");
 		}
-		if (!a.getItemStack().isSimilar(b.getItemStack())) {
-			return new Result<>("orders are for different items");
+		try {
+			if (!a.getItemStack().isSimilar(b.getItemStack())) {
+				return new Result<>("orders are for different items");
+			}
+		} catch (Exception e) {
+			// Yes, this looks bad, but it due to https://hub.spigotmc.org/jira/browse/SPIGOT-5288
+			if (a.getItemStack().getType() != b.getItemStack().getType()) {
+				return new Result<>("orders are for different items");
+			}
 		}
 		return new Result<>();
+	}
+
+	static String itemStackToString(ItemStack itemStack) {
+		String ans = "???";
+		try {
+			ans = itemStack.toString();
+			return ans;
+		} catch (Exception e) {
+			// See https://hub.spigotmc.org/jira/browse/SPIGOT-5288
+			ans = itemStack.getType().toString();
+			return itemStack.getAmount()+"x"+ans;
+		}
+	}
+
+	static String exceptionToString(Exception e) {
+		StringWriter msg = new StringWriter();
+		e.printStackTrace(new PrintWriter(msg));
+		return msg.toString();
+	}
+
+	static void logException(Exception e, Logger logger) {
+		logger.error(Utils.exceptionToString(e));
 	}
 }
